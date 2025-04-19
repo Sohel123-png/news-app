@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📰 Daily News</h1>
+        <form method="get" action="/">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search news...">
+            <button type="submit">Search</button>
+        </form>
+
+        <div class="news-grid">
+            {% for article in articles %}
+                <div class="card">
+                    <img src="{{ article.urlToImage or '' }}" alt="No image" onerror="this.style.display='none'">
+                    <h2>{{ article.title }}</h2>
+                    <p>{{ article.description }}</p>
+                    <a href="{{ article.url }}" target="_blank">Read more</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
