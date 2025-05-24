@@ -1,0 +1,190 @@
+/* General styles (can be shared or overridden) */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 1em 0;
+    text-align: center;
+}
+
+nav a {
+    margin: 0 10px;
+    color: #ddd;
+    text-decoration: none;
+}
+nav a:hover {
+    color: #fff;
+}
+
+/* Styles for the News Page (index.html) - assuming it uses these or similar */
+.news-container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.news-article {
+    border-bottom: 1px #ccc dotted;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+/* Styles for the Health Dashboard (health_dashboard.html) */
+.dashboard-header {
+    background-color: #28a745; /* Green for health */
+    color: white;
+    padding: 1.5em 0;
+    text-align: center;
+}
+
+.dashboard-nav {
+    background-color: #218838; /* Darker green */
+    padding: 0.5em;
+    text-align: center;
+}
+.dashboard-nav a {
+    color: #e9f5ee;
+    margin: 0 15px;
+    text-decoration: none;
+    font-weight: bold;
+}
+.dashboard-nav a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+
+.dashboard-container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.dashboard-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+}
+
+.dashboard-section h2 {
+    color: #28a745;
+    border-bottom: 2px solid #28a745;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.summary-item {
+    background-color: #e9f5ee; /* Light green background */
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    border: 1px solid #c8e6c9;
+}
+
+.summary-item h3 {
+    margin-top: 0;
+    color: #1e7e34; /* Darker green for item titles */
+}
+
+.summary-item p {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+}
+
+.badges-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.badge {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    min-width: 120px;
+}
+
+.badge img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+    border-radius: 50%; /* Circular badges */
+    background-color: #eee; /* Placeholder background */
+}
+
+/* API Interaction Section */
+.api-form-container {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+}
+.api-form-container h3 {
+    margin-top: 0;
+    color: #333;
+}
+.api-form-container label {
+    display: block;
+    margin-bottom: 5px;
+}
+.api-form-container input[type="text"],
+.api-form-container input[type="number"],
+.api-form-container input[type="float"] {
+    width: calc(100% - 12px);
+    padding: 6px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+.api-form-container button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.api-form-container button:hover {
+    background-color: #218838;
+}
+.api-form-container pre {
+    background-color: #eee;
+    padding: 10px;
+    border-radius: 3px;
+    white-space: pre-wrap; /* Allows text to wrap */
+    word-break: break-all; /* Breaks long strings */
+}
+
+
+.dashboard-footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    background-color: #333;
+    color: #fff;
+}

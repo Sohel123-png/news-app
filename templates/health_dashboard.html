@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitgent Health Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="dashboard-header">
+        <h1>Fitgent Health Dashboard</h1>
+    </header>
+
+    <nav class="dashboard-nav">
+        <a href="/">News Feed</a>
+        <a href="/dashboard">Health Dashboard</a>
+        <!-- Add other navigation links as needed -->
+    </nav>
+
+    <main class="dashboard-container">
+        <section id="weekly-summary" class="dashboard-section">
+            <h2>Weekly Health Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <h3>Sleep Average</h3>
+                    <p id="sleep-avg">7.2 hours</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Activity Level</h3>
+                    <p id="activity-level">Active</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Food Orders Tracked</h3>
+                    <p id="food-orders">5 meals</p>
+                </div>
+                <div class="summary-item">
+                    <h3>Wellness Score</h3>
+                    <p id="wellness-score">85/100</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="badges" class="dashboard-section">
+            <h2>My Badges</h2>
+            <div class="badges-container">
+                <div class="badge">
+                    <img src="https://via.placeholder.com/80?text=Badge1" alt="Badge Healthy Hacker">
+                    <p>Healthy Hacker</p>
+                </div>
+                <div class="badge">
+                    <img src="https://via.placeholder.com/80?text=Badge2" alt="Badge Balanced Champ">
+                    <p>Balanced Champ</p>
+                </div>
+                <div class="badge">
+                    <img src="https://via.placeholder.com/80?text=Badge3" alt="Badge Early Riser">
+                    <p>Early Riser</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="api-interaction" class="dashboard-section">
+            <h2>Interact with Fitgent APIs</h2>
+            <div>
+                <label for="user-id-input">User ID for API calls:</label>
+                <input type="number" id="user-id-input" value="1" style="margin-bottom: 10px; padding: 5px;">
+            </div>
+            
+            <!-- Health Data Submission -->
+            <div class="api-form-container">
+                <h3>Submit Health Data</h3>
+                <form id="health-data-form">
+                    <label for="date">Date (YYYY-MM-DD):</label>
+                    <input type="text" id="date" name="date" value="2024-07-30"><br>
+                    <label for="steps">Steps:</label>
+                    <input type="number" id="steps" name="steps" value="12000"><br>
+                    <label for="sleep_hours">Sleep Hours:</label>
+                    <input type="float" id="sleep_hours" name="sleep_hours" value="7.5"><br>
+                    <label for="heart_rate_avg">Avg Heart Rate:</label>
+                    <input type="float" id="heart_rate_avg" name="heart_rate_avg" value="65"><br>
+                    <label for="stress_score">Stress Score (0-100):</label>
+                    <input type="number" id="stress_score" name="stress_score" value="30"><br>
+                    <label for="calories_burned">Calories Burned:</label>
+                    <input type="float" id="calories_burned" name="calories_burned" value="500"><br>
+                    <button type="button" onclick="submitHealthData()">Submit Health Data</button>
+                </form>
+                <pre id="health-data-response"></pre>
+            </div>
+
+            <!-- Get Health Suggestions -->
+            <div class="api-form-container">
+                <h3>Get Health Suggestions</h3>
+                <button type="button" onclick="getHealthSuggestions()">Get Suggestions</button>
+                <pre id="health-suggestions-response"></pre>
+            </div>
+
+            <!-- Get Food Recommendation -->
+            <div class="api-form-container">
+                <h3>Get Food Recommendation</h3>
+                <form id="food-recommendation-form">
+                    <label for="time_of_day">Time of Day (morning, afternoon, evening):</label>
+                    <input type="text" id="time_of_day" name="time_of_day" value="afternoon"><br>
+                    <!-- Steps and Calories can be pre-filled or fetched -->
+                    <button type="button" onclick="getFoodRecommendation()">Get Food Recommendation</button>
+                </form>
+                <pre id="food-recommendation-response"></pre>
+            </div>
+        </section>
+    </main>
+
+    <footer class="dashboard-footer">
+        <p>&copy; 2024 Fitgent. Stay Healthy!</p>
+    </footer>
+
+    <script>
+        async function submitHealthData() {
+            const userId = document.getElementById('user-id-input').value;
+            const data = {
+                user_id: parseInt(userId),
+                date: document.getElementById('date').value,
+                steps: parseInt(document.getElementById('steps').value),
+                sleep_hours: parseFloat(document.getElementById('sleep_hours').value),
+                heart_rate_avg: parseFloat(document.getElementById('heart_rate_avg').value),
+                stress_score: parseInt(document.getElementById('stress_score').value),
+                calories_burned: parseFloat(document.getElementById('calories_burned').value)
+            };
+            const response = await fetch('/api/health-data', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+            document.getElementById('health-data-response').textContent = JSON.stringify(await response.json(), null, 2);
+        }
+
+        async function getHealthSuggestions() {
+            const userId = document.getElementById('user-id-input').value;
+            const response = await fetch('/api/health-suggestions', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({user_id: parseInt(userId)})
+            });
+            document.getElementById('health-suggestions-response').textContent = JSON.stringify(await response.json(), null, 2);
+        }
+
+        async function getFoodRecommendation() {
+            const userId = document.getElementById('user-id-input').value;
+            // For food recommendation, we need current steps and calories.
+            // These could be fetched from the latest DB entry or use the form fields if we want to decouple.
+            // For simplicity, let's use the values from the health data form for this demo.
+            const data = {
+                user_id: parseInt(userId),
+                steps: parseInt(document.getElementById('steps').value), // Using values from health data form
+                calories_burned: parseFloat(document.getElementById('calories_burned').value), // Using values from health data form
+                time_of_day: document.getElementById('time_of_day').value
+            };
+            const response = await fetch('/api/food-recommendation', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+            document.getElementById('food-recommendation-response').textContent = JSON.stringify(await response.json(), null, 2);
+        }
+    </script>
+
+</body>
+</html>
